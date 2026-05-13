@@ -37,10 +37,10 @@ type EventItem = {
   status: string | null
 }
 
-const EVENTS_ENDPOINT = "https://krmyafzkevfynagcuwbh.supabase.co/rest/v1/rpc/get_weekly_events"
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybXlhZnprZXZmeW5hZ2N1d2JoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Njg3MDY1NywiZXhwIjoyMDkyNDQ2NjU3fQ.7VfTwIe6eTv5ThTAH1jmTIToF313N6jCDr_kfuhwlag"
-const AUTH_TOKEN = API_KEY
+const EVENTS_ENDPOINT = import.meta.env.VITE_EVENTS_ENDPOINT;
+const API_KEY = import.meta.env.VITE_API_KEY;
+const AUTH_TOKEN = API_KEY ||  import.meta.env.VITE_AUTH_TOKEN;
+
 
 function decodeHtmlEntities(text: string | null) {
   if (!text) {
