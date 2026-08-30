@@ -1,0 +1,42 @@
+name: BojiWorkZ workflow status
+
+on:
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  workflow-status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - name: Report configured project capabilities
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const project = JSON.parse(fs.readFileSync('.bojiworkz/project.json', 'utf8'));
+          const yes = value => value ? 'configured' : 'not configured yet';
+          const lines = [
+            '# BojiWorkZ workflow status',
+            '',
+            `- Project status: ${project.status || 'unknown'}`,
+            `- Build: ${yes(project.commands?.build)}`,
+            `- Tests: ${yes(project.commands?.test)}`,
+            `- Functional health: ${yes(project.commands?.health)}`,
+            `- Private development URL: ${yes(project.development?.url)}`,
+            `- Side-by-Side baseline: ${yes(project.side_by_side?.baseline)}`,
+            `- Side-by-Side candidate: ${yes(project.side_by_side?.candidate)}`,
+            `- Production approval: ${project.production?.approval || 'not requested'}`,
+            '',
+            'This report is evidence of configuration status. It is not a production approval.'
+          ];
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
+          NODE
