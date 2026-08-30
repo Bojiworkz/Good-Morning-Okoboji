@@ -319,53 +319,63 @@ export function App() {
   const imageBadgeBase =
     "inline-flex items-center rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-foreground shadow dark:bg-black/60 dark:text-white"
 
-  const fetchEvents = async () => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const response = await fetch(EVENTS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          apikey: API_KEY,
-          Authorization: `Bearer ${AUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`)
-      }
-
-      const data = (await response.json()) as EventItem[]
-      const cleanedData = data.map((event) => ({
-        ...event,
-        title: decodeHtmlEntities(event.title),
-        description: event.description
-          ? decodeHtmlEntities(event.description)
-          : null,
-        location_name: event.location_name
-          ? decodeHtmlEntities(event.location_name)
-          : null,
-        location_address: event.location_address
-          ? decodeHtmlEntities(event.location_address)
-          : null,
-      }))
-
-      setEvents(cleanedData)
-    } catch (fetchError) {
-      const message =
-        fetchError instanceof Error
-          ? fetchError.message
-          : "Unable to load events data."
-      setError(message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const controller = new AbortController()
+
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(EVENTS_ENDPOINT, {
+          method: "POST",
+          headers: {
+            apikey: API_KEY,
+            Authorization: `Bearer ${AUTH_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          signal: controller.signal,
+        })
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`)
+        }
+
+        const data = (await response.json()) as EventItem[]
+        const cleanedData = data.map((event) => ({
+          ...event,
+          title: decodeHtmlEntities(event.title),
+          description: event.description
+            ? decodeHtmlEntities(event.description)
+            : null,
+          location_name: event.location_name
+            ? decodeHtmlEntities(event.location_name)
+            : null,
+          location_address: event.location_address
+            ? decodeHtmlEntities(event.location_address)
+            : null,
+        }))
+
+        if (!controller.signal.aborted) {
+          setEvents(cleanedData)
+        }
+      } catch (fetchError) {
+        if (controller.signal.aborted) {
+          return
+        }
+
+        const message =
+          fetchError instanceof Error
+            ? fetchError.message
+            : "Unable to load events data."
+        setError(message)
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
+      }
+    }
+
     void fetchEvents()
+
+    return () => controller.abort()
   }, [])
 
   return (
@@ -649,38 +659,6 @@ export function App() {
                           ? event.description
                           : "Description not provided. Use the event link for details."
                         const host = getHostname(event.event_url)
-                        const metaRows = [
-                          { label: "Event id", value: event.id },
-                          { label: "City id", value: event.city_id },
-                          { label: "Source id", value: event.source_id },
-                          { label: "Slug", value: event.slug },
-                          { label: "Dedup key", value: event.dedup_key ?? "Not set" },
-                          {
-                            label: "Rank score",
-                            value:
-                              event.rank_score !== null
-                                ? String(event.rank_score)
-                                : "Not scored",
-                          },
-                          {
-                            label: "Created at",
-                            value: formatDateTime(event.created_at),
-                          },
-                          {
-                            label: "Updated at",
-                            value: formatDateTime(event.updated_at),
-                          },
-                          {
-                            label: "Category",
-                            value: event.category ?? "Not set",
-                          },
-                          {
-                            label: "Client notes",
-                            value: event.client_notes ?? "Not set",
-                          },
-                          { label: "Status", value: event.status ?? "Not set" },
-                        ]
-
                         return (
                           <article
                             className="group overflow-hidden rounded-3xl border border-border/70 bg-card/90 shadow-sm transition hover:-translate-y-1 hover:shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500"
