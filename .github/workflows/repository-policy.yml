@@ -1,0 +1,43 @@
+name: Repository policy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    name: Validate repository policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
+        with:
+          persist-credentials: false
+
+      - name: Reject environment folders and committed credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for forbidden in staging production; do
+            if [[ -e "$forbidden" ]]; then
+              echo "::error file=$forbidden::Runtime environments must be GitHub/hosting environments, not source folders"
+              exit 1
+            fi
+          done
+
+          secret_files="$(find . -path './.git' -prune -o -type f \( -name '.env' -o -name '.env.local' -o -name '*.pem' -o -name '*.p12' -o -name '*.pfx' -o -name 'id_rsa' -o -name 'id_ed25519' \) -print)"
+          if [[ -n "$secret_files" ]]; then
+            echo "::error::Forbidden credential-like files are committed"
+            printf '%s\n' "$secret_files"
+            exit 1
+          fi
+
+          echo "Repository policy check passed."
