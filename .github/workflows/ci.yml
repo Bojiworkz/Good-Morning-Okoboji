@@ -1,5 +1,6 @@
 name: CI
 
+
 on:
   pull_request:
     branches:
@@ -8,8 +9,10 @@ on:
     branches:
       - main
 
+
 permissions:
   contents: read
+
 
 jobs:
   verify:
@@ -22,20 +25,26 @@ jobs:
         with:
           persist-credentials: false
 
+
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: '20'
+          node-version: '24'
           package-manager-cache: false
+
 
       - name: Install dependencies
         run: npm ci
 
+
       - name: Lint
         run: npm run lint
+
 
       - name: Typecheck
         run: npm run typecheck
 
+
       - name: Build
         run: npm run build
+
