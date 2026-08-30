@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "workflow_package": "bojiworkz-project-lifecycle",
+  "workflow_version": "0.2.0",
+  "source": "Bojiworkz/workflow-control",
+  "source_commit": "9856397b76e1a854eab1a097a39eeb2b78653150",
+  "advisory": true,
+  "generator": "scripts/render.mjs"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "discovery",
+  "project_type": "unknown",
+  "commands": {
+    "build": "",
+    "test": "",
+    "health": ""
+  },
+  "development": {
+    "needed": true,
+    "private": true,
+    "url": ""
+  },
+  "side_by_side": {
+    "baseline": "",
+    "candidate": "",
+    "verification_command": ""
+  },
+  "production": {
+    "approval": "not_requested",
+    "target": ""
+  },
+  "open_decisions": []
+}

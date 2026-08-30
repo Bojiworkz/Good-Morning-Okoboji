@@ -1,0 +1,8 @@
+---
+description: Apply the BojiWorkZ project lifecycle to every project task
+alwaysApply: false
+---
+
+Use `.agents/skills/bojiworkz-project-lifecycle/SKILL.md` for project lifecycle
+work. Adapt it to current repository evidence. Do not infer a fixed stack,
+folder layout, hosting provider, branch model, or business decision.
