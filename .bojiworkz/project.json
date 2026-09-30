@@ -1,9 +1,9 @@
 {
-  "status": "discovery",
-  "project_type": "unknown",
+  "status": "development",
+  "project_type": "existing-website",
   "commands": {
-    "build": "",
-    "test": "",
+    "build": "npm run build",
+    "test": "npm test",
     "health": ""
   },
   "development": {
@@ -20,5 +20,9 @@
     "approval": "not_requested",
     "target": ""
   },
-  "open_decisions": []
+  "open_decisions": [
+    "Domain and public hosting deferred by owner",
+    "Four HeyGen renders require content and visual verification",
+    "Production data access and isolated staging configuration need review"
+  ]
 }
