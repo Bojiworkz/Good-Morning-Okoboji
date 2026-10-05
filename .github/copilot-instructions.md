@@ -19,3 +19,9 @@ Apply the relevant expert's judgment: infer and research the likely audience, st
 ## Execution target — check before any machine or browser work
 All browser work, computer control, shell commands, local file writes, local servers and builds run on ONE machine only: the current target named in private `Bojiworkz/Master/docs/Governance/EXECUTION-TARGET.md` (read it through the authorized connector or current checkout; in Master read it directly). Before acting on a computer or in a browser, prove which machine the session is linked to (`hostname`/`whoami`, the device report, or the browser's own machine) and compare it with that file. On any mismatch, or if the file cannot be read, take no machine action, offer no override, tell Jeff the named and reported machines plus the one fix (start the task from the target machine), and continue only cloud-side work. Tailscale reachability does not change which machine a session acts on.
 <!-- BOJIWORKZ-EXECUTION-TARGET:END -->
+
+
+<!-- BOJIWORKZ-AGENT-TEAM:START -->
+## Agent team — shared roles for every project and every AI
+When acting as, or handing work to, a project manager, scheduler, workflow expert, software engineer, GitHub steward, verifier, security-privacy reviewer, continuity agent or research scout, read that role's file in private `Bojiworkz/Master/.agents/agents/bojiworkz-team/` (start with `README.md`) through the authorized connector or current checkout, and follow its workflow and the team's shared contract: GitHub issues are the work record, every claim is labelled PROVEN, INFERRED or BLOCKED, no merge, deploy, DNS, spending or secrets without Jeff's yes, and nothing is done until an independent verifier has evidence from the real system. Keep project-specific facts in this repository. If the files cannot be read, say so and continue only with work that does not depend on them.
+<!-- BOJIWORKZ-AGENT-TEAM:END -->
