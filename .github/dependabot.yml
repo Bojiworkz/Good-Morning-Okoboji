@@ -1,0 +1,31 @@
+# Dependabot version updates (free on private repositories).
+# Weekly, at most 5 open version-update pull requests per ecosystem,
+# minor and patch updates grouped into one pull request; majors arrive singly.
+# Dependabot alerts and security updates are switched on separately by the
+# repository owner in Settings > Advanced Security.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
