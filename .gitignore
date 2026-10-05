@@ -1,0 +1,9 @@
+# Environment files hold credentials; only the example (names, no values) is tracked
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+.turbo/
