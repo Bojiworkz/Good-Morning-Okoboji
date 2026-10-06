@@ -54,7 +54,7 @@ export function SiteHeader({ platform }: SiteHeaderProps) {
 
         <nav
           aria-label="Site sections"
-          className="mt-3 flex gap-1 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-3 flex flex-wrap gap-1 pb-1"
         >
           {NAV.map((item) => (
             <a
