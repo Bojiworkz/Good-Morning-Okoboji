@@ -12,6 +12,7 @@ import {
 import { fetchPlatformContext, type PlatformContext } from "@/lib/platform-config"
 import { generateWeeklyScript } from "@/lib/weekly-script"
 import { getShowName } from "@/lib/branding"
+import { setPageMeta } from "@/lib/site-meta"
 
 function GateBadge({ status }: { status: ReadinessGate["status"] }) {
   const styles: Record<ReadinessGate["status"], string> = {
@@ -36,6 +37,11 @@ export function ApprovalDashboard() {
   const [error, setError] = useState<string | null>(null)
   const [operatorNote, setOperatorNote] = useState("")
   const [operatorApproved, setOperatorApproved] = useState(false)
+
+  useEffect(() => {
+    const showName = platform ? getShowName(platform.brand) : "Good Morning Okoboji"
+    setPageMeta({ title: `${showName} — Approval Dashboard` })
+  }, [platform])
 
   useEffect(() => {
     let cancelled = false
