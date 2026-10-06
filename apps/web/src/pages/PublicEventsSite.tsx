@@ -165,7 +165,7 @@ export function PublicEventsSite({
             <div className="flex w-full max-w-md items-center rounded-xl border border-border/70 bg-background px-3 py-2 shadow-sm lg:w-72">
               <input
                 aria-label="Search events"
-                className="w-full bg-transparent text-sm outline-none placeholder:text-foreground/45"
+                className="w-full bg-transparent text-sm placeholder:text-foreground/45"
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search events…"
                 type="search"
