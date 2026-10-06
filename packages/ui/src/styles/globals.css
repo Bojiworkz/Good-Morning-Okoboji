@@ -135,3 +135,19 @@
     font-family: "Fraunces", serif;
   }
 }
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+}
