@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Owner insight — Good Morning Okoboji</title>
+  <style>
+    body { margin: 0; font: 16px/1.5 Georgia, serif; background: #f6f4ef; color: #1c1915; }
+    main { max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.8rem; line-height: 1.2; margin-bottom: 0.4rem; }
+    .status { padding: 0.8rem 1rem; border-radius: 8px; font-weight: 700; }
+    .incomplete { background: #fff4d6; }
+    .complete { background: #e5f4e8; }
+    label { display: block; margin: 1.2rem 0 0.35rem; font-weight: 700; }
+    textarea, input { width: 100%; box-sizing: border-box; font: inherit; padding: 0.7rem; border: 1px solid #8a8175; border-radius: 6px; }
+    textarea { min-height: 7rem; }
+    button { margin-top: 1.2rem; min-height: 44px; padding: 0.6rem 1rem; font: inherit; font-weight: 700; }
+    p { margin: 0.6rem 0; }
+  </style>
+</head>
+<body>
+<main>
+  <p>Admin · Good Morning Okoboji</p>
+  <h1>Owner insight</h1>
+  <p id="status" class="status incomplete" role="status">Incomplete. This site is not ready until the owner’s own answers are saved.</p>
+  <p>These answers are the owner’s words. They explain who the business is for and what the site is supposed to do. Leave a field blank if the owner has not said it. Do not invent an answer.</p>
+  <form id="insight">
+    <label for="business">What is the business name?</label>
+    <input id="business" name="business" required autocomplete="organization">
+    <label for="does">What does the business do, in the owner’s words?</label>
+    <textarea id="does" name="does" required></textarea>
+    <label for="customer">Who is the customer the owner wants to reach?</label>
+    <textarea id="customer" name="customer" required></textarea>
+    <label for="action">What should a visitor do on the site?</label>
+    <textarea id="action" name="action" required></textarea>
+    <label for="success">What does success look like, in one sentence from the owner?</label>
+    <textarea id="success" name="success" required></textarea>
+    <label for="avoid">What must the site not say or promise?</label>
+    <textarea id="avoid" name="avoid" required></textarea>
+    <button type="submit">Save owner insight</button>
+    <button type="button" id="download">Download the saved answers</button>
+  </form>
+</main>
+<script>
+const key = "bojiworkz-owner-insight:Good-Morning-Okoboji";
+const form = document.querySelector("#insight");
+const status = document.querySelector("#status");
+const fields = ["business", "does", "customer", "action", "success", "avoid"];
+function read() {
+  const data = {};
+  fields.forEach((name) => { data[name] = form.elements[name].value.trim(); });
+  return data;
+}
+function filled(data) { return fields.every((name) => data[name]); }
+function show(data) {
+  const done = filled(data);
+  status.textContent = done
+    ? "Complete. The owner’s answers are saved in this browser."
+    : "Incomplete. This site is not ready until the owner’s own answers are saved.";
+  status.className = "status " + (done ? "complete" : "incomplete");
+}
+const saved = localStorage.getItem(key);
+if (saved) {
+  const data = JSON.parse(saved);
+  fields.forEach((name) => { if (data[name]) form.elements[name].value = data[name]; });
+  show(data);
+}
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = read();
+  if (!filled(data)) { show(data); return; }
+  localStorage.setItem(key, JSON.stringify({ ...data, savedAt: new Date().toISOString(), site: "Good-Morning-Okoboji" }));
+  show(data);
+});
+document.querySelector("#download").addEventListener("click", () => {
+  const raw = localStorage.getItem(key);
+  if (!raw) { show(read()); return; }
+  const blob = new Blob([raw], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "owner-insight.json";
+  link.click();
+});
+</script>
+</body>
+</html>
