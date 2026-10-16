@@ -1,0 +1,9 @@
+---
+description: Route all machine and browser work to the BojiWorkZ execution target
+alwaysApply: true
+---
+
+<!-- BOJIWORKZ-EXECUTION-TARGET:START -->
+## Execution target — check before any machine or browser work
+All browser work, computer control, shell commands, local file writes, local servers and builds run on ONE machine only: the current target named in private `Bojiworkz/Master/docs/Governance/EXECUTION-TARGET.md` (read it through the authorized connector or current checkout; in Master read it directly). Before acting on a computer or in a browser, prove which machine the session is linked to (`hostname`/`whoami`, the device report, or the browser's own machine) and compare it with that file. On any mismatch, or if the file cannot be read, take no machine action, offer no override, tell Jeff the named and reported machines plus the one fix (start the task from the target machine), and continue only cloud-side work. Tailscale reachability does not change which machine a session acts on.
+<!-- BOJIWORKZ-EXECUTION-TARGET:END -->
