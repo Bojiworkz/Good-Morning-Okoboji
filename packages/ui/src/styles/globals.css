@@ -135,3 +135,28 @@
     font-family: "Fraunces", serif;
   }
 }
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid CanvasText;
+  outline-offset: 2px;
+}
