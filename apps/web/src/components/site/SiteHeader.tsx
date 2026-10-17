@@ -125,6 +125,14 @@ export function SiteIntro({
           {" · "}
           {eventCount} events
         </p>
+        {eventCount === 0 ? (
+          <a
+            className="mt-5 inline-flex min-h-[44px] items-center rounded-full bg-foreground px-5 text-sm font-semibold text-background"
+            href="#/best-of"
+          >
+            See Best Of Okoboji
+          </a>
+        ) : null}
       </div>
     </section>
   )

@@ -130,8 +130,8 @@ export function PublicEventsSite({
 
         <TopEventsByDay
           days={sections.topEventsByDay}
-          description="Current highlights selected for audience appeal: headline entertainment, signature events, and standout local experiences."
-          emptyMessage="No verified audience-interest highlights meet the selection criteria yet. Browse current local listings below."
+          description="The events most worth your time this week."
+          emptyMessage="Nothing is listed for the rest of this week. See Best Of Okoboji for places that are open."
           id="top-events"
           title={platform.brand.top_events_section_title ?? "Top Events This Week"}
         />
@@ -145,7 +145,7 @@ export function PublicEventsSite({
 
         <EventSection
           description="Meetups, clubs, and community gatherings."
-          emptyMessage="No community-class events this week."
+          emptyMessage="No community events are listed this week."
           events={sections.communityEvents}
           id="community-events"
           title="Community Events"
@@ -202,7 +202,7 @@ export function PublicEventsSite({
           <PlaceholderSection
             description="Find something to enjoy together."
             id="family-activities"
-            status="No verified family events are listed for the rest of this week."
+            status="No family events are listed for the rest of this week."
             title="Family Activities"
           />
         )}
@@ -210,7 +210,7 @@ export function PublicEventsSite({
         <PlaceholderSection
           description="Discover more of the Iowa Great Lakes."
           id="hidden-gems"
-          status="Our local recommendations are being researched. Check back for verified places to explore."
+          status="Local recommendations are still being added. See Best Of Okoboji for places that are open."
           title="Hidden Gems"
         />
       </main>
